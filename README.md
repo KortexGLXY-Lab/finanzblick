@@ -88,18 +88,21 @@ KORTEX_DB=/pfad/zu/finanzen.sqlite3 python3 app.py
 
 `KORTEX_HOST=0.0.0.0` macht den Server grundsätzlich über erreichbare Netzwerkschnittstellen verfügbar. Für einen Rechner, auf dem die Anwendung nur lokal verwendet wird, ist `127.0.0.1` die sicherere Einstellung.
 
-## Erster Login
+## Erster Start und Konto erstellen
 
-Beim ersten Start wird automatisch ein Administratorkonto angelegt:
+Bei einer neuen Installation wird **kein Admin-Konto und kein Standardpasswort** angelegt. Beim ersten Aufruf öffnet KortexFinance direkt den Bereich **Konto erstellen**.
 
-```text
-Benutzername: admin
-Startpasswort: admin1234
-```
+Dort werden eingegeben:
 
-Das Startpasswort muss nach der ersten Anmeldung sofort über **Benutzerkonto → Passwort ändern** ersetzt werden. Das Konto verfügt über Administratorrechte und kann weitere Benutzer verwalten.
+- Benutzername
+- Passwort mit mindestens 8 Zeichen
+- Passwortbestätigung
 
-Neue Benutzer können sich über die Registrierungsseite anlegen. Ein Benutzer sieht nur seine eigenen Buchungen, Konten und Tags.
+Das Konto wird erst angelegt, wenn beide Passwörter übereinstimmen. Nach erfolgreicher Registrierung wird die Sitzung automatisch gestartet und das persönliche Finanzdashboard geöffnet.
+
+Bei späteren Aufrufen erscheint die normale Anmeldung. Über **Noch kein Konto? Jetzt registrieren** können weitere Benutzerkonten angelegt werden. Jeder Benutzer sieht nur seine eigenen Buchungen, Konten und Tags.
+
+Die Administrationsfunktionen bleiben für bereits vorhandene Benutzer mit der Rolle `admin` verfügbar. Neue Installationen erzeugen jedoch bewusst keinen privilegierten Benutzer automatisch.
 
 ## Daten und Datenschutz
 
@@ -162,9 +165,10 @@ Die API wird vom gleichen Server bereitgestellt wie die Oberfläche.
 
 ### Authentifizierung
 
+- `GET /api/auth/status` – prüfen, ob bereits Benutzerkonten vorhanden sind
 - `GET /api/me` – aktuelles Benutzerkonto abrufen
 - `POST /api/login` – anmelden
-- `POST /api/register` – Benutzerkonto erstellen
+- `POST /api/register` – Benutzerkonto mit Passwortbestätigung erstellen
 - `POST /api/logout` – Sitzung beenden
 
 ### Finanzen
@@ -251,7 +255,8 @@ git status
 
 KortexFinance ist für lokale Nutzung ausgelegt. Für einen öffentlichen oder produktiven Betrieb sind zusätzliche Maßnahmen notwendig:
 
-- Standardpasswort `admin1234` sofort ändern
+- Kein voreingestelltes Admin-Konto oder Standardpasswort verwenden
+- Benutzerpasswörter mit mindestens 8 Zeichen wählen
 - `KORTEX_HOST=127.0.0.1` verwenden, wenn kein Netzwerkzugriff benötigt wird
 - Server nicht direkt ohne HTTPS ins Internet stellen
 - Zugriff über einen abgesicherten Reverse Proxy bereitstellen

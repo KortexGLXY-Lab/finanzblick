@@ -84,8 +84,6 @@ def connect():
         user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
         expires_at TEXT NOT NULL
     )""")
-    db.execute("INSERT OR IGNORE INTO users (username, password_hash, role) VALUES (?, ?, 'admin')", ("admin", password_hash("admin1234")))
-    db.execute("UPDATE users SET role = 'admin' WHERE username = 'admin' COLLATE NOCASE")
     db.commit()
     return db
 
@@ -206,7 +204,12 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
-        if path == "/api/me":
+        if path == "/api/auth/status":
+            db = connect()
+            has_users = db.execute("SELECT EXISTS(SELECT 1 FROM users)").fetchone()[0]
+            db.close()
+            self.send_json({"has_users": bool(has_users)})
+        elif path == "/api/me":
             user_id = request_user(self)
             if not user_id:
                 self.send_json({"user": None})
@@ -334,8 +337,12 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/api/register":
             username = str(item.get("username", "")).strip()
             password = str(item.get("password", ""))
+            password_confirmation = str(item.get("password_confirmation", ""))
             if len(username) < 3 or len(password) < 8:
                 self.send_json({"error": "Benutzername: mindestens 3 Zeichen, Passwort: mindestens 8 Zeichen"}, 400)
+                return
+            if password != password_confirmation:
+                self.send_json({"error": "Die Passwörter stimmen nicht überein"}, 400)
                 return
             db = connect()
             try:
