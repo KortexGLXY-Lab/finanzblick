@@ -207,13 +207,13 @@ finanzblick/
 ├── README.md                               # Projektdokumentation
 ├── .gitignore                              # Ausschluss lokaler Daten und Caches
 ├── assets/
-│   └── kortex-logo.png                     # Logo
+│   ├── kortex-logo.png                     # Aktives Logo
+│   ├── Glassy Cyan KF Monogram on Dark Gradient.png
+│   └── Glossy Cyan K-F Emblem.png          # zusätzliche Design-Assets
 ├── finanzen.sqlite3                        # lokale Datenbank, nicht versioniert
-├── Glassy Cyan KF Monogram on Dark Gradient.png
-└── Glossy Cyan K-F Emblem.png              # zusätzliche Design-Assets
 ```
 
-Die beiden PNG-Dateien im Projektstamm sind Design-Assets. Die aktive Oberfläche verwendet das Logo aus `assets/kortex-logo.png`.
+Alle PNG- und Branding-Dateien liegen gebündelt im Ordner `assets/`. Die aktive Oberfläche verwendet das Logo aus `assets/kortex-logo.png`.
 
 ## Versionsverwaltung
 
