@@ -1,0 +1,46 @@
+# Finanzblick / KortexFinance
+
+# Lokale Datenbanken niemals versionieren
+*.db
+*.sqlite
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+*.sqlite3-journal
+*.db-wal
+*.db-shm
+*.db-journal
+finanzen.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtuelle Umgebungen
+.venv/
+venv/
+env/
+
+# Lokale Konfiguration und Geheimnisse
+.env
+.env.*
+!.env.example
+
+# Betriebssystem- und Editor-Dateien
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Build- und Cache-Verzeichnisse
+dist/
+build/
+.cache/
